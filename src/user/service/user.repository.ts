@@ -1,7 +1,13 @@
+// tenho o seguinte Repositorio em meu projeto, que é responsavel por realizar as consultas no banco de dados
+// Ao realizar uma consulta recebo o seguinte erro:
+// NotFoundError [PrismaClientKnownRequestError]: No user found,
+// code: 'P2025',
+// clientVersion: '5.6.0',
+// meta: undefined
+
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserDto } from '../dto/user.dto';
-import { UserLogin } from 'src/utils/interfaces/user.interfaces';
 import { PartialUserDto } from '../dto/user.partial.dto';
 
 @Injectable()
@@ -12,9 +18,9 @@ export class UserRepository {
     return await this.prismaService.user.create({ data: user });
   }
 
-  async login(user: UserLogin): Promise<UserDto> {
+  async email(email: string): Promise<UserDto> {
     return await this.prismaService.user.findUniqueOrThrow({
-      where: { email: user.email },
+      where: { email: email },
     });
   }
 
