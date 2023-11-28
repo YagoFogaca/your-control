@@ -4,10 +4,12 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Res,
 } from '@nestjs/common';
 import { UserService } from './service/user.service';
 import { UserCreateDto } from './dto/user.create.dto';
+import { PartialUserDto } from './dto/user.partial.dto';
 
 @Controller('users')
 export class UserController {
@@ -20,7 +22,7 @@ export class UserController {
       return {
         message: 'Usuário criado com sucesso',
         data: userCreated,
-        statusCode: 200,
+        statusCode: 201,
       };
     } catch (error) {
       console.log(error);
@@ -30,6 +32,20 @@ export class UserController {
       //   error: 'O servidor não encontrou o dado solicitado',
       //   statusCode: 400,
       // });
+    }
+  }
+
+  @Patch('/')
+  async update(@Body() user: PartialUserDto) {
+    try {
+      const userUpdate = await this.userService.update(user);
+      return {
+        message: 'Usuário atualizado com sucesso',
+        data: userUpdate,
+        statusCode: 200,
+      };
+    } catch (error) {
+      console.log(error);
     }
   }
 }

@@ -34,4 +34,14 @@ export class UserRepository {
   async delete(id: string): Promise<UserDto> {
     return await this.prismaService.user.delete({ where: { id: id } });
   }
+
+  async findById(id: string): Promise<UserDto> {
+    return await this.prismaService.user.findUniqueOrThrow({
+      where: { id: id },
+    });
+  }
+
+  async find(): Promise<UserDto[]> {
+    return await this.prismaService.user.findMany();
+  }
 }
