@@ -7,6 +7,7 @@ import { UserRepository } from './service/user.repository';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { Find } from './service/usecase/find.usecase';
 import { UserUpdateUseCase } from './service/usecase/update.usecase';
+import { UserDeleteUseCase } from './service/usecase/delete.usecase';
 
 @Module({
   controllers: [UserController],
@@ -16,6 +17,7 @@ import { UserUpdateUseCase } from './service/usecase/update.usecase';
     Find,
     UserUpdateUseCase,
     UserCreateUseCase,
+    UserDeleteUseCase,
     UserRepository,
     PrismaService,
   ],

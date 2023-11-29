@@ -4,6 +4,7 @@ import { UserCreateDto } from '../dto/user.create.dto';
 import { UserDto } from '../dto/user.dto';
 import { PartialUserDto } from '../dto/user.partial.dto';
 import { UserUpdateUseCase } from './usecase/update.usecase';
+import { UserDeleteUseCase } from './usecase/delete.usecase';
 import { Find } from './usecase/find.usecase';
 
 @Injectable()
@@ -11,6 +12,7 @@ export class UserService {
   constructor(
     private readonly userCreateUseCase: UserCreateUseCase,
     private readonly userUpdateUseCase: UserUpdateUseCase,
+    private readonly userDeleteUseCase: UserDeleteUseCase,
     private readonly find: Find,
   ) {}
 
@@ -24,5 +26,9 @@ export class UserService {
 
   async findAll(): Promise<UserDto[]> {
     return await this.find.execute();
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return await this.userDeleteUseCase.execute(id);
   }
 }

@@ -5,7 +5,9 @@ import {
   Get,
   Post,
   Patch,
-  Res,
+  Delete,
+  Param,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './service/user.service';
 import { UserCreateDto } from './dto/user.create.dto';
@@ -25,13 +27,8 @@ export class UserController {
         statusCode: 201,
       };
     } catch (error) {
-      console.log(error);
-      throw new BadRequestException('dsfsdfsd', error);
-      // throw new BadRequestException({
-      //   message: 'Usuários não encontrados',
-      //   error: 'O servidor não encontrou o dado solicitado',
-      //   statusCode: 400,
-      // });
+      console.log(error.message);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -45,7 +42,37 @@ export class UserController {
         statusCode: 200,
       };
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @Get('/')
+  async find() {
+    try {
+      const userUpdate = await this.userService.findAll();
+      return {
+        message: 'Usuários encontrados com sucesso',
+        data: userUpdate,
+        statusCode: 200,
+      };
+    } catch (error) {
+      console.log(error.message);
+      throw new NotFoundException(error.message);
+    }
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: string) {
+    try {
+      await this.userService.delete(id);
+      return {
+        message: 'Usuário deletado com sucesso',
+        statusCode: 200,
+      };
+    } catch (error) {
+      console.log(error.message);
+      throw new NotFoundException(error.message);
     }
   }
 }
