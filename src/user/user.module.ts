@@ -21,5 +21,6 @@ import { UserDeleteUseCase } from './service/usecase/delete.usecase';
     UserRepository,
     PrismaService,
   ],
+  exports: [UserRepository],
 })
 export class UserModule {}
